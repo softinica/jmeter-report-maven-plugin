@@ -1,5 +1,4 @@
 package org.softinica.maven.jmeter.report;
-
 /*
  * Copyright 2001-2005 The Apache Software Foundation.
  *
@@ -15,10 +14,13 @@ package org.softinica.maven.jmeter.report;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
-
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
@@ -27,12 +29,6 @@ import org.softinica.maven.jmeter.report.model.Input;
 import org.softinica.maven.jmeter.report.model.Report;
 import org.softinica.maven.jmeter.report.parser.IInputParser;
 import org.softinica.maven.jmeter.report.writer.IWriter;
-import org.softinica.maven.jmeter.report.writer.DocBookWriter;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 
 @Mojo(name = "report", defaultPhase = LifecyclePhase.VERIFY)
 /**
@@ -90,7 +86,7 @@ public class JMeterReportMojo extends AbstractMojo {
 		try {
 			outputFile.getParentFile().mkdirs();
 			OutputStream outputStream = new FileOutputStream(outputFile);
-			return new DocBookWriter(outputStream);
+			return Utils.create(reportDefinition.getWriterClass(), OutputStream.class, outputStream);
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}

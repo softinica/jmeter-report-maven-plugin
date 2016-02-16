@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.softinica.maven</groupId>
+	<artifactId>jmeter-report-maven-plugin-test1</artifactId>
+	<version>1.0-SNAPSHOT</version>
+
+	<description>A simple test pom verifying the basic use case.</description>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>@project.groupId@</groupId>
+				<artifactId>@project.artifactId@</artifactId>
+				<version>@project.version@</version>
+				<executions>
+					<execution>
+						<id>report</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+						<configuration>
+							<outputFile>target/jmeter-report/xml/out.xml</outputFile>
+							<reportDefinition>
+								<writerClass>org.softinica.maven.jmeter.report.writer.XMLWriter</writerClass>
+								<title>Bulk Program Ratings API Performance Tests</title>
+								<description>Description</description>
+								<inputDefinitions>
+									<inputDefinition>
+										<inputFile>script.jtl</inputFile>
+										<parserClass>org.softinica.maven.jmeter.report.parser.JTLv1_2InputParser</parserClass>
+										<pageDefinitions>
+											<pageDefinition>
+												<title>Summary Report</title>
+												<description>Desc 2</description>
+												<analyzerClass>org.softinica.maven.jmeter.report.analyser.SummaryReportAnalyzer</analyzerClass>
+											</pageDefinition>
+											<pageDefinition>
+												<title>Throughput Report</title>
+												<description>Desc 3</description>
+												<analyzerClass>org.softinica.maven.jmeter.report.analyser.ThroughputAnalyzer</analyzerClass>
+												<outputFile>target/jmeter-report/throughput.jpeg</outputFile>
+											</pageDefinition>
+											<pageDefinition>
+												<title>Duration Report</title>
+												<description>Desc 4</description>
+												<analyzerClass>org.softinica.maven.jmeter.report.analyser.RequestDurationAnalyzer</analyzerClass>
+												<outputFile>target/jmeter-report/duration.jpeg</outputFile>
+											</pageDefinition>
+											<pageDefinition>
+												<title>Response Size Report</title>
+												<description>Desc 5</description>
+												<analyzerClass>org.softinica.maven.jmeter.report.analyser.ResponseSizeAnalyzer</analyzerClass>
+												<outputFile>target/jmeter-report/size.jpeg</outputFile>
+											</pageDefinition>
+										</pageDefinitions>
+									</inputDefinition>
+									<inputDefinition>
+										<parserClass>org.softinica.maven.jmeter.report.parser.CSVReportParser</parserClass>
+										<inputFile>jmx-cpu.csv</inputFile>
+										<scale>100</scale>
+										<pageDefinitions>
+											<pageDefinition>
+												<title>CPU consumption Report</title>
+												<description>Desc 6</description>
+												<analyzerClass>org.softinica.maven.jmeter.report.analyser.ValueByTimestampAnalyzer</analyzerClass>
+												<outputFile>target/jmeter-report/cpu.jpeg</outputFile>
+											</pageDefinition>
+										</pageDefinitions>
+									</inputDefinition>
+									<inputDefinition>
+										<parserClass>org.softinica.maven.jmeter.report.parser.CSVReportParser</parserClass>
+										<inputFile>jmx-memory.csv</inputFile>
+										<pageDefinitions>
+											<pageDefinition>
+												<title>RAM consumption Report</title>
+												<description>Desc 7</description>
+												<analyzerClass>org.softinica.maven.jmeter.report.analyser.ValueByTimestampAnalyzer</analyzerClass>
+												<outputFile>target/jmeter-report/memory.jpeg</outputFile>
+											</pageDefinition>
+										</pageDefinitions>
+									</inputDefinition>
+								</inputDefinitions>
+							</reportDefinition>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>xml-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>verify</phase>
+						<goals>
+							<goal>transform</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<transformationSets>
+						<transformationSet>
+							<dir>target/jmeter-report/xml</dir>
+							<stylesheet>src/main/stylesheet.xsl</stylesheet>
+						</transformationSet>
+					</transformationSets>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.agilejava.docbkx</groupId>
+				<artifactId>docbkx-maven-plugin</artifactId>
+				<version>2.0.14</version>
+				<executions>
+					<execution>
+						<id>doc</id>
+						<goals>
+							<goal>generate-pdf</goal>
+						</goals>
+						<phase>verify</phase>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>net.sf.xslthl</groupId>
+						<artifactId>xslthl</artifactId>
+						<version>2.0.2</version>
+						<scope>runtime</scope>
+					</dependency>
+					<dependency>
+						<groupId>net.sf.offo</groupId>
+						<artifactId>fop-hyph</artifactId>
+						<version>1.2</version>
+						<scope>runtime</scope>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<sourceDirectory>target/generated-resources/xml/xslt</sourceDirectory>
+					<targetDirectory>target/docs</targetDirectory>
+					<xincludeSupported>true</xincludeSupported>
+					<useExtensions>1</useExtensions>
+					<highlightSource>1</highlightSource>
+					<highlightDefaultLanguage>java</highlightDefaultLanguage>
+					<calloutsExtension>1</calloutsExtension>
+					<paperType>A4</paperType>
+					<pageOrientation>landscape</pageOrientation>
+					<fop1Extensions>1</fop1Extensions>
+					<includes>out.xml</includes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

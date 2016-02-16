@@ -18,11 +18,14 @@ package org.softinica.maven.jmeter.report;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.softinica.maven.jmeter.report.writer.DocBookWriter;
+
 public class ReportDefinition {
 
 	private String title;
 	private String description;
 	private List<InputDefinition> inputDefinitions = new LinkedList<InputDefinition>();
+	private String writerClass = DocBookWriter.class.getCanonicalName();
 	
 	public ReportDefinition() {
 	}
@@ -49,5 +52,13 @@ public class ReportDefinition {
 	
 	public void setInputDefinitions(List<InputDefinition> inputDefinitions) {
 		this.inputDefinitions = inputDefinitions;
+	}
+	
+	public String getWriterClass() {
+		return writerClass;
+	}
+	
+	public void setWriterClass(String writerClass) {
+		this.writerClass = writerClass;
 	}
 }

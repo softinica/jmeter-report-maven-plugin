@@ -11,6 +11,14 @@
 	<description>
 		This maven plugin creates reports from Apache JMeter output files.
 	</description>
+	
+	<developers>
+		<developer>
+			<email>softinica@gmail.com</email>
+			<name>softinica</name>
+			<organization>softinica</organization>
+		</developer>
+	</developers>
 
 	<url>https://github.com/softinica/jmeter-report-maven-plugin</url>
 

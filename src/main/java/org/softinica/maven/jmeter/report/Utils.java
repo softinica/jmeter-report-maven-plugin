@@ -17,6 +17,7 @@ package org.softinica.maven.jmeter.report;
  */
 import java.io.Closeable;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 public class Utils {
 
@@ -30,15 +31,27 @@ public class Utils {
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
 	public static <T> T create(String classname) {
+		return create(classname, null, null);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static <T> T create(String classname, Class<?> classParam, Object value) {
 		try {
-			return (T) Class.forName(classname).newInstance();
+			if (classParam == null) {
+				return (T) Class.forName(classname).newInstance();
+			} else {
+				return (T) Class.forName(classname).getConstructor(classParam).newInstance(value);
+			}
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException(e);
 		} catch (IllegalAccessException e) {
 			throw new RuntimeException(e);
 		} catch (InstantiationException e) {
+			throw new RuntimeException(e);
+		} catch (NoSuchMethodException e) {
+			throw new RuntimeException(e);
+		} catch (InvocationTargetException e) {
 			throw new RuntimeException(e);
 		}
 	}

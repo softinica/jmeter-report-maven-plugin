@@ -1,6 +1,4 @@
 package org.softinica.maven.jmeter.report.analyser;
-
-import java.io.IOException;
 /*
  * Copyright 2001-2005 The Apache Software Foundation.
  *
@@ -16,6 +14,9 @@ import java.io.IOException;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+import java.io.IOException;
+
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.softinica.maven.jmeter.report.PageDefinition;

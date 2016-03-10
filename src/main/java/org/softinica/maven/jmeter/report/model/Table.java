@@ -18,13 +18,13 @@ import com.google.common.collect.ArrayTable;
 
 public class Table extends AbstractReportable {
 
-	private ArrayTable<String, String, String> table;
+	private ArrayTable<Object, String, String> table;
 
-	public Table(Iterable<String> rowKeys, Iterable<String> columnKeys) {
+	public Table(Iterable<? extends Object> rowKeys, Iterable<String> columnKeys) {
 		table = ArrayTable.create(rowKeys, columnKeys);
 	}
 	
-	public void put(String rowKey, String columnKey, String value) {
+	public void put(Object rowKey, String columnKey, String value) {
 		table.put(rowKey, columnKey, value);
 	}
 	
@@ -32,7 +32,7 @@ public class Table extends AbstractReportable {
 		return table.rowKeySet().size();
 	}
 	
-	public Iterable<String> rowKeys() {
+	public Iterable<Object> rowKeys() {
 		return table.rowKeySet();
 	}
 	
@@ -48,7 +48,7 @@ public class Table extends AbstractReportable {
 		return table.at(i, j);
 	}
 	
-	public String get(String rowKey, String columnKey) {
+	public String get(Object rowKey, String columnKey) {
 		return table.get(rowKey, columnKey);
 	}
 }

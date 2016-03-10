@@ -1,4 +1,4 @@
-package org.softinica.maven.jmeter.report.parser;
+package org.softinica.maven.jmeter.report.analyser;
 /*
  * Copyright 2001-2005 The Apache Software Foundation.
  *
@@ -14,10 +14,21 @@ package org.softinica.maven.jmeter.report.parser;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import org.softinica.maven.jmeter.report.InputDefinition;
+import org.softinica.maven.jmeter.report.PageDefinition;
+import org.softinica.maven.jmeter.report.model.Graph;
 import org.softinica.maven.jmeter.report.model.Input;
 
-public interface IInputParser {
+public class ImageAnalyzer implements IInputAnalyzer<Graph> {
 
-	public Input parseInput(InputDefinition definition);
+	public ImageAnalyzer() {
+	}
+
+	@Override
+	public Graph analyse(PageDefinition definition, Input input) {
+		Graph graph = new Graph();
+		graph.setTitle(definition.getTitle());
+		graph.setDescription(definition.getDescription());
+		graph.setExternalFile(definition.getOutputFile().getAbsolutePath());
+		return graph;
+	}
 }

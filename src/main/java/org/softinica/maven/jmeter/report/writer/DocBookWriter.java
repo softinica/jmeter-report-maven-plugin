@@ -65,7 +65,7 @@ public class DocBookWriter extends AbstractWriter {
 		writeEndElement();
 		
 		writeStartElement("tbody");
-		for (String rowKey : table.rowKeys()) {
+		for (Object rowKey : table.rowKeys()) {
 			writeStartElement("row");
 			for (String columnKey : table.columnKeys()) {
 				writeSimpleNode("entry", table.get(rowKey, columnKey));

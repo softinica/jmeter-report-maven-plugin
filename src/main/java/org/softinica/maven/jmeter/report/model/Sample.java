@@ -1,4 +1,8 @@
 package org.softinica.maven.jmeter.report.model;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /*
  * Copyright 2001-2005 The Apache Software Foundation.
  *
@@ -15,108 +19,142 @@ package org.softinica.maven.jmeter.report.model;
  * limitations under the License.
  */
 public class Sample {
-
-	private String label;
-	private double value;
-	private long timestamp;
-	private long latency;
-	private boolean success;
-	private String rescultCode;
-	private String threadName;
-	private String dataType;
-	private long byteCount;
-	private long activeThreadsInGroup;
-	private long activeThreads;
 	
+	public static final String LABEL = "jmx.label";
+	public static final String VALUE = "jmx.value";
+	public static final String TIMESTAMP = "jmx.timestamp";
+	public static final String LATENCY = "jmx.latency";
+	public static final String SUCCESS = "jmx.success";
+	public static final String RESULT_CODE = "jmx.resultCode";
+	public static final String THREAD_NAME = "jmx.threadName";
+	public static final String DATA_TYPE = "jmx.dataType";
+	public static final String BYTE_COUNT = "jmx.byteCount";
+	public static final String ACTIVE_THREADS_IN_GROUP = "jmx.activeThreadsInGroup";
+	public static final String ACTIVE_THREADS = "jmx.activeThreads";
+	
+	private Map<String, Object> fields = new HashMap<String, Object>();
+
 	public Sample() {
 	}
 	
+	public Object get(String key) {
+		return fields.get(key);
+	}
+	
+	public Iterable<String> keys() {
+		return fields.keySet();
+	}
+	
+	public String getString(String key) {
+		return (String) fields.get(key);
+	}
+	
+	public long getLong(String key) {
+		return (Long) fields.get(key);
+	}
+	
+	public int getInt(String key) {
+		return (Integer) fields.get(key);
+	}
+	
+	public double getDouble(String key) {
+		return (Double) fields.get(key);
+	}
+	
+	public boolean getBoolean(String key) {
+		return (Boolean) fields.get(key);
+	}
+	
 	public String getLabel() {
-		return label;
+		return getString(LABEL);
+	}
+	
+	public void put(String key, Object value) {
+		fields.put(key, value);
 	}
 	
 	public void setLabel(String label) {
-		this.label = label;
+		put(LABEL, label);
 	}
 	
 	public long getTimestamp() {
-		return timestamp;
+		return getLong(TIMESTAMP);
 	}
 	
 	public void setTimestamp(long timestamp) {
-		this.timestamp = timestamp;
+		put(TIMESTAMP, timestamp);
 	}
 	
 	public double getValue() {
-		return value;
+		return getDouble(VALUE);
 	}
 	
 	public void setValue(double value) {
-		this.value = value;
+		put(VALUE, value);
 	}
 	
 	public long getActiveThreads() {
-		return activeThreads;
+		return getLong(ACTIVE_THREADS);
 	}
 	
 	public void setActiveThreads(long activeThreads) {
-		this.activeThreads = activeThreads;
+		put(ACTIVE_THREADS, activeThreads);
 	}
 	
 	public long getActiveThreadsInGroup() {
-		return activeThreadsInGroup;
+		return getLong(ACTIVE_THREADS_IN_GROUP);
 	}
 	
 	public void setActiveThreadsInGroup(long activeThreadsInGroup) {
-		this.activeThreadsInGroup = activeThreadsInGroup;
+		put(ACTIVE_THREADS_IN_GROUP, activeThreadsInGroup);
 	}
 	
 	public long getByteCount() {
-		return byteCount;
+		return getLong(BYTE_COUNT);
 	}
 	
 	public void setByteCount(long byteCount) {
-		this.byteCount = byteCount;
+		put(BYTE_COUNT, byteCount);
 	}
 	
 	public String getDataType() {
-		return dataType;
+		return getString(DATA_TYPE);
 	}
 	
 	
 	public void setDataType(String dataType) {
-		this.dataType = dataType;
+		put(DATA_TYPE, dataType);
 	}
 	
 	public long getLatency() {
-		return latency;
+		return getLong(LATENCY);
 	}
 	
 	public void setLatency(long latency) {
-		this.latency = latency;
+		put(LATENCY, latency);
 	}
 	
-	public String getRescultCode() {
-		return rescultCode;
+	public String getResultCode() {
+		return getString(RESULT_CODE);
 	}
 	
-	public void setRescultCode(String rescultCode) {
-		this.rescultCode = rescultCode;
+	public void setResultCode(String resultCode) {
+		put(RESULT_CODE, resultCode);
 	}
 	
 	public String getThreadName() {
-		return threadName;
+		return getString(THREAD_NAME);
 	}
 	
 	public void setSuccess(boolean success) {
-		this.success = success;
+		put(SUCCESS, success);
 	}
 	
 	public void setThreadName(String threadName) {
-		this.threadName = threadName;
+		put(THREAD_NAME, threadName);
 	}
 	
 	public boolean isSuccess() {
-		return success;
+		return getBoolean(SUCCESS);
 	}
 }

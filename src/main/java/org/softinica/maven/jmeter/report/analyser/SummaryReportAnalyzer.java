@@ -19,16 +19,13 @@ import java.text.NumberFormat;
 import java.util.List;
 
 import org.apache.commons.math3.stat.descriptive.moment.StandardDeviation;
-import org.softinica.maven.jmeter.report.PageDefinition;
-import org.softinica.maven.jmeter.report.model.Input;
 import org.softinica.maven.jmeter.report.model.Sample;
 import org.softinica.maven.jmeter.report.model.Table;
 
-import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
 
-public class SummaryReportAnalyzer implements IInputAnalyzer<Table> {
+public class SummaryReportAnalyzer extends AbstractGroupedTableAnalyzer {
 	
 	private static final String LABEL = "Label";
 	private static final String SAMPLES = "#Samples";
@@ -45,18 +42,14 @@ public class SummaryReportAnalyzer implements IInputAnalyzer<Table> {
 	private static final NumberFormat NUMBER_FORMAT = new DecimalFormat("#.##");
 
 	public SummaryReportAnalyzer() {
+		super(Sample.LABEL, COLUMNS);
 	}
+
 	
-	public Table analyse(PageDefinition definition, Input input) {
-		Multimap<String, Sample> grouped = HashMultimap.create();
-		for (Sample sample : input.getSamples()) {
-			grouped.put(sample.getLabel(), sample);
-		}
+	@Override
+	protected void fillTable(Table table, Multimap<Object, Sample> grouped) {
 		StandardDeviation deviation = new StandardDeviation();
-		Table table = new Table(grouped.keySet(), COLUMNS);
-		table.setTitle(definition.getTitle());
-		table.setDescription(definition.getDescription());
-		for (String key : grouped.keySet()) {
+		for (Object key : grouped.keySet()) {
 			double total = 0D;
 			int sampleCount = grouped.get(key).size();
 			double[] values = new double[sampleCount];
@@ -88,7 +81,7 @@ public class SummaryReportAnalyzer implements IInputAnalyzer<Table> {
 				}
 				totalBytes += sample.getByteCount();
 			}
-			table.put(key, LABEL, key);
+			table.put(key, LABEL, key.toString());
 			table.put(key, SAMPLES, String.valueOf(sampleCount));
 			table.put(key, AVERAGE, NUMBER_FORMAT.format(total / sampleCount));
 			table.put(key, MIN, NUMBER_FORMAT.format(min));
@@ -99,6 +92,5 @@ public class SummaryReportAnalyzer implements IInputAnalyzer<Table> {
 			table.put(key, KB_PER_SEC, NUMBER_FORMAT.format(totalBytes / total * 1000));
 			table.put(key, AVERAGE_BYTES, NUMBER_FORMAT.format(totalBytes / sampleCount));
 		}
-		return table;
 	}
 }

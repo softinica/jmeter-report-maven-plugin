@@ -57,7 +57,7 @@ public class XMLWriter extends AbstractWriter {
 		writeEndElement();
 		writeEndElement();
 		writeStartElement("tbody");
-		for (String rowKey : table.rowKeys()) {
+		for (Object rowKey : table.rowKeys()) {
 			writeStartElement("tr");
 			for (String columnKey : table.columnKeys()) {
 				writeSimpleNode("td", table.get(rowKey, columnKey));

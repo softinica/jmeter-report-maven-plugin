@@ -10,11 +10,17 @@
 		<article xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink"
 			xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:db="http://docbook.org/ns/docbook"
 			version="5.0">
+
 			<articleinfo>
 				<title>
 					<xsl:value-of select="/report/title" />
 				</title>
 			</articleinfo>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="./src/main/banner.png" />
+				</imageobject>
+	   		</mediaobject>	
 			<xsl:apply-templates select="/report/graph|/report/table" />
 		</article>
 	</xsl:template>

@@ -43,6 +43,11 @@
 												<analyzerClass>org.softinica.maven.jmeter.report.analyser.SummaryReportAnalyzer</analyzerClass>
 											</pageDefinition>
 											<pageDefinition>
+												<title>Response Code Report</title>
+												<description>Response Code Description</description>
+												<analyzerClass>org.softinica.maven.jmeter.report.analyser.ResponseCodeCountAnalyzer</analyzerClass>
+											</pageDefinition>
+											<pageDefinition>
 												<title>Throughput Report</title>
 												<description>Desc 3</description>
 												<analyzerClass>org.softinica.maven.jmeter.report.analyser.ThroughputAnalyzer</analyzerClass>
@@ -76,6 +81,18 @@
 										</pageDefinitions>
 									</inputDefinition>
 									<inputDefinition>
+										<parserClass>org.softinica.maven.jmeter.report.parser.SimpleCSVParser</parserClass>
+										<inputFile>jmx-cpu.csv</inputFile>
+										<scale>100</scale>
+										<pageDefinitions>
+											<pageDefinition>
+												<title>CPU consumption Report</title>
+												<description>Desc 6</description>
+												<analyzerClass>org.softinica.maven.jmeter.report.analyser.SimpleTableAnalyzer</analyzerClass>
+											</pageDefinition>
+										</pageDefinitions>
+									</inputDefinition>
+									<inputDefinition>
 										<parserClass>org.softinica.maven.jmeter.report.parser.CSVReportParser</parserClass>
 										<inputFile>jmx-memory.csv</inputFile>
 										<pageDefinitions>
@@ -83,6 +100,12 @@
 												<title>RAM consumption Report</title>
 												<description>Desc 7</description>
 												<analyzerClass>org.softinica.maven.jmeter.report.analyser.ValueByTimestampAnalyzer</analyzerClass>
+												<outputFile>target/jmeter-report/memory.jpeg</outputFile>
+											</pageDefinition>
+											<pageDefinition>
+												<title>RAM consumption Report (Image)</title>
+												<description>Desc 8</description>
+												<analyzerClass>org.softinica.maven.jmeter.report.analyser.ImageAnalyzer</analyzerClass>
 												<outputFile>target/jmeter-report/memory.jpeg</outputFile>
 											</pageDefinition>
 										</pageDefinitions>
@@ -148,6 +171,10 @@
 					<highlightSource>1</highlightSource>
 					<highlightDefaultLanguage>java</highlightDefaultLanguage>
 					<calloutsExtension>1</calloutsExtension>
+					<pageMarginInner>5</pageMarginInner>
+					<pageMarginOuter>5</pageMarginOuter>
+					<marginLeftInner>5</marginLeftInner>
+					<bodyStartIndent>0</bodyStartIndent>
 					<paperType>A4</paperType>
 					<pageOrientation>landscape</pageOrientation>
 					<fop1Extensions>1</fop1Extensions>

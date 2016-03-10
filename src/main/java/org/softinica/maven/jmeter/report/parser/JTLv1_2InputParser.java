@@ -90,7 +90,7 @@ public class JTLv1_2InputParser implements IInputParser {
 			sample.setDataType(attributes.getValue("dt"));
 			sample.setLabel(attributes.getValue("lb"));
 			sample.setLatency(Long.valueOf(attributes.getValue("lt")));
-			sample.setRescultCode(attributes.getValue("rc"));
+			sample.setResultCode(attributes.getValue("rc"));
 			sample.setSuccess(Boolean.parseBoolean(attributes.getValue("s")));
 			sample.setThreadName(attributes.getValue("tn"));
 			sample.setTimestamp(Long.valueOf(attributes.getValue("ts")));

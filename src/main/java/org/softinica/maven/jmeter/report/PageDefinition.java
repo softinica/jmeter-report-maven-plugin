@@ -24,7 +24,7 @@ public class PageDefinition {
 	private String analyzerClass;
 	private File outputFile;
 	private int height = 400;
-	private int width = 700;
+	private int width = 840;
 	
 	public PageDefinition() {
 	}
